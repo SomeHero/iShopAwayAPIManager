@@ -12,6 +12,7 @@ import ObjectMapper
 public class Market: Mappable {
     public var id: String?
     public var name: String
+    public var mainImageUrl: String?
     public var about: String
     public var personalShopper: PersonalShopper?
 
@@ -28,6 +29,6 @@ public class Market: Mappable {
         id <- map["_id"]
         name <- map["name"]
         about <- map["about"]
-        personalShopper <- map["personal_shopper"]
+        mainImageUrl <- map["main_image_url"]
     }
 }
