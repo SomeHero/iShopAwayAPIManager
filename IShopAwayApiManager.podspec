@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'IShopAwayApiManager'
-  s.version          = '0.1.0'
+  s.version          = '0.1.1'
   s.summary          = 'Shared API for iShopAway.'
   s.description      = 'Shared API for iShopAway'
   s.homepage         = 'https://github.com/somehero/IShopAwayApiManager'
@@ -19,10 +19,15 @@ Pod::Spec.new do |s|
 
   s.ios.deployment_target = '8.0'
 
-  s.source_files = 'IShopAwayApiManager/Classes/**/*'
-  s.framework     = "Foundation"
-  s.dependency 'Alamofire',      '~> 3.4.0'
-  s.dependency 'ObjectMapper',   '~> 1.3.0'
-  s.dependency  'SwiftyJSON',    '~> 2.3.2'
-  s.dependency  'AlamofireObjectMapper', '~> 3.0.0'
+
+  ## Specs
+  s.subspec "Root" do |sub|
+    sub.source_files  ='IShopAwayApiManager/Classes/**/*'
+    sub.framework     = "Foundation"
+
+    sub.dependency 'Alamofire',      '~> 3.4.0'
+    sub.dependency 'ObjectMapper',   '~> 1.3.0'
+    sub.dependency 'SwiftyJSON',    '~> 2.3.2'
+    sub.dependency 'AlamofireObjectMapper', '~> 3.0.0'
+  end
 end
