@@ -52,13 +52,13 @@ public struct ShoppingSessionCheckout {
     }
 }
 public struct CreateShopper {
-    let firstName: String
-    let lastName: String
-    let emailAddress: String
-    var avatarUrl: String?
-    var facebookProfile: AnyObject?
+    public let firstName: String
+    public let lastName: String
+    public let emailAddress: String
+    public var avatarUrl: String?
+    public var facebookProfile: AnyObject?
     
-    init(firstName: String, lastName: String, emailAddress: String) {
+    public init(firstName: String, lastName: String, emailAddress: String) {
         self.firstName = firstName
         self.lastName = lastName
         self.emailAddress = emailAddress
@@ -521,7 +521,7 @@ public class IShopAwayApiManager {
                 }
         }
     }
-    public static func getPurchaseRequest(purchaseRequestId: String, success: (response: PurchaseRequest?) -> Void, failure: (ErrorType?) -> Void) {
+    public static func getPurchaseRequest(purchaseRequestId: String, success: (response: PurchaseRequest) -> Void, failure: (ErrorType?) -> Void) {
         Alamofire.request(.GET,  IShopAwayApiManager.kApiBaseUrl + "purchase_requests/\(purchaseRequestId)")
             .responseObject { (response: Response<PurchaseRequest, NSError>) in
                 if let error = response.result.error {
@@ -560,7 +560,7 @@ public class IShopAwayApiManager {
                 }
         }
     }
-    public static func getCheckoutRequest(checkoutRequestId: String, success: (response: CheckoutRequest?) -> Void, failure: (ErrorType?) -> Void) {
+    public static func getCheckoutRequest(checkoutRequestId: String, success: (response: CheckoutRequest) -> Void, failure: (ErrorType?) -> Void) {
         Alamofire.request(.GET,  IShopAwayApiManager.kApiBaseUrl + "checkout_requests/\(checkoutRequestId)")
             .responseObject { (response: Response<CheckoutRequest, NSError>) in
                 if let error = response.result.error {
