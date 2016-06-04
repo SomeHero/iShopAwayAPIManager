@@ -12,13 +12,13 @@ import SwiftyJSON
 import ObjectMapper
 import AlamofireObjectMapper
 
-enum ProductSize: Int {
+public enum ProductSize: Int {
     case Small
     case Medium
     case Large
     case XLarge
 }
-struct UpdateMarket {
+public struct UpdateMarket {
     let marketId: String
     let name: String
     let about: String
@@ -34,7 +34,7 @@ struct UpdateMarket {
         return parameters
     }
 }
-struct CreatePersonalShopper {
+public struct CreatePersonalShopper {
     let firstName: String
     let lastName: String
     let emailAddress: String
@@ -63,7 +63,7 @@ struct CreatePersonalShopper {
         return parameters
     }
 }
-struct RegisterForPushNotifications {
+public struct RegisterForPushNotifications {
     let personalShopper: PersonalShopper
     let apn_device_token: String
     
@@ -75,7 +75,7 @@ struct RegisterForPushNotifications {
         return parameters
     }
 }
-struct CreatePurchaseRequest {
+public struct CreatePurchaseRequest {
     let amount: NSDecimalNumber
     let shoppingSession: ShoppingSession
     let productSize: ProductSize
@@ -94,7 +94,7 @@ struct CreatePurchaseRequest {
         return parameters
     }
 }
-struct CreateCheckoutRequest {
+public struct CreateCheckoutRequest {
     let amount: NSDecimalNumber
     let shoppingSessionId: String
     
@@ -107,7 +107,7 @@ struct CreateCheckoutRequest {
         return parameters
     }
 }
-class PersonalShopperApiManager {
+public class PersonalShopperApiManager {
     static let kApiBaseUrl = "http://localhost:8080/api/"
     //static let kApiBaseUrl = "http://192.168.1.124:8080/api/"
     

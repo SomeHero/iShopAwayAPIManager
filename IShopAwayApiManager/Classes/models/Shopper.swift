@@ -9,7 +9,7 @@
 import Foundation
 import ObjectMapper
 
-class Shopper: Mappable {
+public class Shopper: Mappable {
     static var sharedShopper: Shopper?
     
     var id: String?
@@ -23,13 +23,13 @@ class Shopper: Mappable {
         self.lastName = lastName
         self.emailAddress = emailAddress
     }
-    required init?(_ map: Map){
+    public required init?(_ map: Map){
         self.firstName = ""
         self.lastName = ""
         self.emailAddress = ""
     }
     
-    func mapping(map: Map) {
+    public func mapping(map: Map) {
         id <- map["_id"]
         firstName <- map["first_name"]
         lastName <- map["last_name"]

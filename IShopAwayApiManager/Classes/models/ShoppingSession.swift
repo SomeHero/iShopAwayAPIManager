@@ -9,7 +9,7 @@
 import Foundation
 import ObjectMapper
 
-class ShoppingSession: Mappable  {
+public class ShoppingSession: Mappable  {
     static var sharedShoppingSession: ShoppingSession?
     
     var id: String?
@@ -23,11 +23,11 @@ class ShoppingSession: Mappable  {
         self.openTokSessionId = openTokSessionId
         self.openTokToken = openTokToken
     }
-    required init?(_ map: Map){
+    public required init?(_ map: Map){
         mapping(map)
     }
     
-    func mapping(map: Map) {
+    public func mapping(map: Map) {
         id <- map["_id"]
         shopper <- map["shopper"]
         openTokSessionId <- map["opentok_session_id"]
@@ -35,7 +35,7 @@ class ShoppingSession: Mappable  {
         cart <- map["cart"]
     }
 }
-class CartItem: Mappable {
+public class CartItem: Mappable {
     var itemName: String!
     var itemLocalCost: NSDecimalNumber!
     var itemShopperPrice: NSDecimalNumber!
@@ -45,11 +45,11 @@ class CartItem: Mappable {
         self.itemLocalCost = itemLocalCost
         self.itemShopperPrice = itemShopperPrice
     }
-    required init?(_ map: Map){
+    public required init?(_ map: Map){
         mapping(map)
     }
     
-    func mapping(map: Map) {
+    public func mapping(map: Map) {
         self.itemName <- map["item_name"]
         self.itemLocalCost <- (map["item_local_cost"], NSDecimalNumberTransform())
         self.itemShopperPrice <- (map["item_shopper_price"], NSDecimalNumberTransform())

@@ -9,7 +9,7 @@
 import Foundation
 import ObjectMapper
 
-class Market: Mappable {
+public class Market: Mappable {
     var id: String?
     var name: String
     var about: String
@@ -19,12 +19,12 @@ class Market: Mappable {
         self.name = name
         self.about = about
     }
-    required init?(_ map: Map){
+    public required init?(_ map: Map){
         self.name = ""
         self.about = ""
     }
     
-    func mapping(map: Map) {
+    public func mapping(map: Map) {
         id <- map["_id"]
         name <- map["name"]
         about <- map["about"]

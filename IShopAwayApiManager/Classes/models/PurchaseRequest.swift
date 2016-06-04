@@ -9,7 +9,7 @@
 import Foundation
 import ObjectMapper
 
-class PurchaseRequest: Mappable {
+public class PurchaseRequest: Mappable {
     var id: String!
     var shoppingSession: ShoppingSession!
     var amount: NSDecimalNumber!
@@ -20,11 +20,10 @@ class PurchaseRequest: Mappable {
         self.amount = amount
         self.status = "Pending"
     }
-    required init?(_ map: Map){
+    public required init?(_ map: Map){
         mapping(map)
     }
-    
-    func mapping(map: Map) {
+    public func mapping(map: Map) {
         id <- map["_id"]
         shoppingSession <- map["shopping_session"]
         amount <- map["amount"]

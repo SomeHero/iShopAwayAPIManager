@@ -9,7 +9,7 @@
 import Foundation
 import ObjectMapper
 
-class CheckoutRequest: Mappable {
+public class CheckoutRequest: Mappable {
     var id: String!
     var shoppingSession: ShoppingSession!
     var amount: Double!
@@ -20,11 +20,11 @@ class CheckoutRequest: Mappable {
         self.amount = amount
         self.status = "New"
     }
-    required init?(_ map: Map){
+    public required init?(_ map: Map){
         mapping(map)
     }
     
-    func mapping(map: Map) {
+    public func mapping(map: Map) {
         id <- map["_id"]
         shoppingSession <- map["shopping_session"]
         amount <- map["amount"]
