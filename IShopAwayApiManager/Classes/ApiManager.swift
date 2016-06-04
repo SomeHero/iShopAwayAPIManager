@@ -24,6 +24,12 @@ public struct UpdateMarket {
     public let about: String
     public let personalShopperId: String
     
+    public init(marketId: String, name: String, about: String, personalShopperId: String) {
+        self.marketId = marketId
+        self.name = name
+        self.about = about
+        self.personalShopperId = personalShopperId
+    }
     func parameterize() -> [String : AnyObject] {
         let parameters = [
             "name": name,
@@ -67,6 +73,10 @@ public struct RegisterForPushNotifications {
     public let personalShopper: PersonalShopper
     public let apn_device_token: String
     
+    public init(personalShopper: PersonalShopper, apn_device_token: String) {
+        self.personalShopper = personalShopper
+        self.apn_device_token = apn_device_token
+    }
     func parameterize() -> [String : AnyObject] {
         let parameters = [
             "apn_device_token": apn_device_token
@@ -80,6 +90,11 @@ public struct CreatePurchaseRequest {
     public let shoppingSession: ShoppingSession
     public let productSize: ProductSize
     
+    public init(amount: NSDecimalNumber, shoppingSession: ShoppingSession, productSize: ProductSize) {
+        self.amount = amount
+        self.shoppingSession = shoppingSession
+        self.productSize = productSize
+    }
     func parameterize() -> [String : AnyObject] {
         guard let shoppingSessionId = shoppingSession.id else {
             fatalError("Attempted to create a purchase request with no Shopping Session")
@@ -98,6 +113,10 @@ public struct CreateCheckoutRequest {
     public let amount: NSDecimalNumber
     public let shoppingSessionId: String
     
+    public init(amount: NSDecimalNumber, shoppingSessionId: String) {
+        self.amount = amount
+        self.shoppingSessionId = shoppingSessionId
+    }
     func parameterize() -> [String : AnyObject] {
         let parameters = [
             "shopping_session_id": shoppingSessionId,
