@@ -35,11 +35,11 @@ public struct UpdateMarket {
     }
 }
 public struct CreatePersonalShopper {
-    let firstName: String
-    let lastName: String
-    let emailAddress: String
-    var avatarUrl: String?
-    var facebookProfile: AnyObject?
+    public let firstName: String
+    public let lastName: String
+    public let emailAddress: String
+    public var avatarUrl: String?
+    public var facebookProfile: AnyObject?
     
     public init(firstName: String, lastName: String, emailAddress: String) {
         self.firstName = firstName
