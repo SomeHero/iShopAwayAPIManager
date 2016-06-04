@@ -12,8 +12,7 @@
     "James Rhodes": "james@ishopaway.com"
   },
   "source": {
-    "git": "https://github.com/somehero/IShopAwayApiManager.git",
-    "tag": "0.1.0"
+    "git": "https://github.com/somehero/IShopAwayApiManager.git"
   },
   "social_media_url": "https://twitter.com/ishopaway",
   "platforms": {

@@ -1,0 +1,72 @@
+//
+//  PersonalShopper.swift
+//  PersonalShopper
+//
+//  Created by James Rhodes on 5/16/16.
+//  Copyright © 2016 James Rhodes. All rights reserved.
+//
+import Foundation
+import ObjectMapper
+
+class PersonalShopper: Mappable {
+    static var sharedPersonalShopper: PersonalShopper?
+    
+    var id: String?
+    var firstName: String
+    var lastName: String
+    var emailAddress: String
+    var apnDeviceToken: String?
+    
+    init(firstName: String, lastName: String, emailAddress: String) {
+        self.firstName = firstName
+        self.lastName = lastName
+        self.emailAddress = emailAddress
+    }
+    required init?(_ map: Map){
+        self.firstName = ""
+        self.lastName = ""
+        self.emailAddress = ""
+    }
+    
+    func mapping(map: Map) {
+        id <- map["_id"]
+        firstName <- map["first_name"]
+        lastName <- map["last_name"]
+        emailAddress <- map["email_address"]
+        apnDeviceToken <- map["apn_device_token"]
+    }
+    func persistUser() {
+        guard let personalShopper = PersonalShopper.sharedPersonalShopper else {
+            return
+        }
+        
+        let userDefaults = NSUserDefaults.standardUserDefaults()
+        
+        userDefaults.setValuesForKeysWithDictionary([
+            "id": personalShopper.id!,
+            "first_name": personalShopper.firstName,
+            "last_name": personalShopper.lastName,
+            "email_address": personalShopper.emailAddress
+        ])
+        
+        userDefaults.synchronize()
+    }
+    static func getPersistedUser() -> PersonalShopper? {
+        let userDefaults = NSUserDefaults.standardUserDefaults()
+        
+        guard let id = userDefaults.stringForKey("id") else {
+            return nil
+        }
+        let firstName = userDefaults.stringForKey("first_name")!
+        let lastName = userDefaults.stringForKey("last_name")!
+        let emailAddress = userDefaults.stringForKey("email_address")!
+
+        let personalShopper = PersonalShopper(firstName: firstName, lastName: lastName, emailAddress: emailAddress)
+        personalShopper.id = id
+        if let apnDeviceToken = userDefaults.stringForKey("apn_device_token") {
+            personalShopper.apnDeviceToken = apnDeviceToken
+        }
+        
+        return personalShopper
+    }
+}

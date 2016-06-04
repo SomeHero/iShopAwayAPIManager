@@ -13,7 +13,7 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  IShopAwayApiManager: ea5802bb1e6cabdbb2adb16b20bbe8439a54d6b6
+  IShopAwayApiManager: 8bdbc856da2aa3f8bdc928e5e5eeb24917beb15f
   Nimble: 703854335d181df169bbca9c97117b5cf8c47c1d
   Quick: 18d057bc66451eedd5d1c8dc99ba2a5db6e60226
 

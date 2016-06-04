@@ -20,12 +20,9 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '8.0'
 
   s.source_files = 'IShopAwayApiManager/Classes/**/*'
-  
-  # s.resource_bundles = {
-  #   'IShopAwayApiManager' => ['IShopAwayApiManager/Assets/*.png']
-  # }
-
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+  s.framework     = "Foundation"
+  s.dependency 'Alamofire',      '~> 3.4.0'
+  s.dependency 'ObjectMapper',   '~> 1.3.0'
+  s.dependency  'SwiftyJSON',    '~> 2.3.2'
+  s.dependency  'AlamofireObjectMapper', '~> 3.0.0'
 end

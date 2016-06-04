@@ -12,6 +12,12 @@ import SwiftyJSON
 import ObjectMapper
 import AlamofireObjectMapper
 
+enum ProductSize: Int {
+    case Small
+    case Medium
+    case Large
+    case XLarge
+}
 struct UpdateMarket {
     let marketId: String
     let name: String
