@@ -1,0 +1,6 @@
+framework module IShopAwayApiManager {
+  umbrella header "IShopAwayApiManager-umbrella.h"
+
+  export *
+  module * { export * }
+}

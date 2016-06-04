@@ -1,0 +1,23 @@
+{
+  "name": "IShopAwayApiManager",
+  "version": "0.1.0",
+  "summary": "Shared API for iShopAway.",
+  "description": "Shared API for iShopAway",
+  "homepage": "https://github.com/somehero/IShopAwayApiManager",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "James Rhodes": "james@ishopaway.com"
+  },
+  "source": {
+    "git": "https://github.com/somehero/IShopAwayApiManager.git",
+    "tag": "0.1.0"
+  },
+  "social_media_url": "https://twitter.com/ishopaway",
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "IShopAwayApiManager/Classes/**/*"
+}
