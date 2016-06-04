@@ -111,7 +111,7 @@ public class PersonalShopperApiManager {
     static let kApiBaseUrl = "http://localhost:8080/api/"
     //static let kApiBaseUrl = "http://192.168.1.124:8080/api/"
     
-    static func getShoppingSession(shoppingSessionId: String, success: (response: ShoppingSession) -> Void, failure: (error: ErrorType?) -> Void) {
+    public static func getShoppingSession(shoppingSessionId: String, success: (response: ShoppingSession) -> Void, failure: (error: ErrorType?) -> Void) {
         Alamofire.request(.GET,  kApiBaseUrl + "shopping_sessions/\(shoppingSessionId)")
             .responseObject { (response: Response<ShoppingSession, NSError>) in
                 if let error = response.result.error {
@@ -123,7 +123,7 @@ public class PersonalShopperApiManager {
                 
         }
     }
-    static func getMarkets(success: (response: [Market]?) -> Void, failure: (ErrorType?) -> Void) {
+    public static func getMarkets(success: (response: [Market]?) -> Void, failure: (ErrorType?) -> Void) {
         Alamofire.request(.GET,  kApiBaseUrl + "markets")
             .responseArray { (response: Response<[Market], NSError>) in
                 if let error = response.result.error {
@@ -135,7 +135,7 @@ public class PersonalShopperApiManager {
             }
     
     }
-    static func getPurchaseRequest(purchaseRequest: PurchaseRequest, success: (response: PurchaseRequest?) -> Void, failure: (ErrorType?) -> Void) {
+    public static func getPurchaseRequest(purchaseRequest: PurchaseRequest, success: (response: PurchaseRequest?) -> Void, failure: (ErrorType?) -> Void) {
         Alamofire.request(.GET,  kApiBaseUrl + "purchase_requests/\(purchaseRequest.id)")
             .responseObject { (response: Response<PurchaseRequest, NSError>) in
                 if let error = response.result.error {
@@ -146,7 +146,7 @@ public class PersonalShopperApiManager {
                 }
         }
     }
-    static func getCheckoutRequest(checkoutRequest: CheckoutRequest, success: (response: CheckoutRequest?) -> Void, failure: (ErrorType?) -> Void) {
+    public static func getCheckoutRequest(checkoutRequest: CheckoutRequest, success: (response: CheckoutRequest?) -> Void, failure: (ErrorType?) -> Void) {
         Alamofire.request(.GET,  kApiBaseUrl + "checkout_requests/\(checkoutRequest.id)")
             .responseObject { (response: Response<CheckoutRequest, NSError>) in
                 if let error = response.result.error {
@@ -157,7 +157,7 @@ public class PersonalShopperApiManager {
                 }
         }
     }
-    static func updateMarket(updateMarket: UpdateMarket, success: (response: Market?) -> Void, failure: (ErrorType?) -> Void) {
+    public static func updateMarket(updateMarket: UpdateMarket, success: (response: Market?) -> Void, failure: (ErrorType?) -> Void) {
         let params = updateMarket.parameterize()
         
         Alamofire.request(.PUT, PersonalShopperApiManager.kApiBaseUrl + "markets/\(updateMarket.marketId)", parameters: params, encoding: .JSON)
@@ -171,7 +171,7 @@ public class PersonalShopperApiManager {
                 
         }
     }
-    static func createPersonalShopper(createPersonalShopper: CreatePersonalShopper, success: (response: PersonalShopper?) -> Void, failure: (error: ErrorType?, json: JSON?) -> Void) {
+    public static func createPersonalShopper(createPersonalShopper: CreatePersonalShopper, success: (response: PersonalShopper?) -> Void, failure: (error: ErrorType?, json: JSON?) -> Void) {
         let params = createPersonalShopper.parameterize()
         
         Alamofire.request(.POST, PersonalShopperApiManager.kApiBaseUrl + "personal_shoppers", parameters: params, encoding: .JSON)
@@ -192,7 +192,7 @@ public class PersonalShopperApiManager {
     
         }
     }
-    static func registerForPushNotifications(registerForPushNotifications: RegisterForPushNotifications, success: (response: PersonalShopper) -> Void, failure: (ErrorType?) -> Void) {
+    public static func registerForPushNotifications(registerForPushNotifications: RegisterForPushNotifications, success: (response: PersonalShopper) -> Void, failure: (ErrorType?) -> Void) {
         let params = registerForPushNotifications.parameterize()
         
         guard let personalShopperId = registerForPushNotifications.personalShopper.id else {
@@ -209,7 +209,7 @@ public class PersonalShopperApiManager {
                 
         }
     }
-    static func publishFeed(shoppingSessionId: String, success: (response: ShoppingSession) -> Void, failure: (ErrorType?) -> Void) {
+    public static func publishFeed(shoppingSessionId: String, success: (response: ShoppingSession) -> Void, failure: (ErrorType?) -> Void) {
         Alamofire.request(.POST, PersonalShopperApiManager.kApiBaseUrl + "shopping_sessions/" + shoppingSessionId + "/publish")
             .responseObject { (response: Response<ShoppingSession, NSError>) in
                 if let error = response.result.error {
@@ -221,7 +221,7 @@ public class PersonalShopperApiManager {
                 
         }
     }
-    static func createPurchaseRequest(createPurchaseRequest: CreatePurchaseRequest, success: (response: PurchaseRequest?) -> Void, failure: (ErrorType?) -> Void) {
+    public static func createPurchaseRequest(createPurchaseRequest: CreatePurchaseRequest, success: (response: PurchaseRequest?) -> Void, failure: (ErrorType?) -> Void) {
         let params = createPurchaseRequest.parameterize()
         
         Alamofire.request(.POST, PersonalShopperApiManager.kApiBaseUrl + "purchase_requests", parameters: params, encoding: .JSON)
@@ -235,7 +235,7 @@ public class PersonalShopperApiManager {
                 
         }
     }
-    static func createCheckoutRequest(createCheckoutRequest: CreateCheckoutRequest, success: (response: CheckoutRequest?) -> Void, failure: (error: ErrorType?) -> Void) {
+    public static func createCheckoutRequest(createCheckoutRequest: CreateCheckoutRequest, success: (response: CheckoutRequest?) -> Void, failure: (error: ErrorType?) -> Void) {
         let params = createCheckoutRequest.parameterize()
         
         Alamofire.request(.POST, PersonalShopperApiManager.kApiBaseUrl + "checkout_requests", parameters: params, encoding: .JSON)
