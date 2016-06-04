@@ -10,12 +10,12 @@ import Foundation
 import ObjectMapper
 
 public class PurchaseRequest: Mappable {
-    var id: String!
-    var shoppingSession: ShoppingSession!
-    var amount: NSDecimalNumber!
-    var status: String!
+    public var id: String!
+    public  var shoppingSession: ShoppingSession!
+    public var amount: NSDecimalNumber!
+    public var status: String!
     
-    init(shoppingSession: ShoppingSession, amount: NSDecimalNumber) {
+    public init(shoppingSession: ShoppingSession, amount: NSDecimalNumber) {
         self.shoppingSession = shoppingSession
         self.amount = amount
         self.status = "Pending"

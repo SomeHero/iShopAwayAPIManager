@@ -10,12 +10,12 @@ import Foundation
 import ObjectMapper
 
 public class CheckoutRequest: Mappable {
-    var id: String!
-    var shoppingSession: ShoppingSession!
-    var amount: Double!
-    var status: String!
+    public var id: String!
+    public var shoppingSession: ShoppingSession!
+    public var amount: Double!
+    public var status: String!
     
-    init(shoppingSession: ShoppingSession, amount: Double) {
+    public init(shoppingSession: ShoppingSession, amount: Double) {
         self.shoppingSession = shoppingSession
         self.amount = amount
         self.status = "New"

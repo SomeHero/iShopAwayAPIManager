@@ -10,12 +10,12 @@ import Foundation
 import ObjectMapper
 
 public class Market: Mappable {
-    var id: String?
-    var name: String
-    var about: String
-    var personalShopper: PersonalShopper?
+    public var id: String?
+    public var name: String
+    public var about: String
+    public var personalShopper: PersonalShopper?
 
-    init(name: String, about: String) {
+    public init(name: String, about: String) {
         self.name = name
         self.about = about
     }

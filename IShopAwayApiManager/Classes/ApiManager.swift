@@ -19,10 +19,10 @@ public enum ProductSize: Int {
     case XLarge
 }
 public struct UpdateMarket {
-    let marketId: String
-    let name: String
-    let about: String
-    let personalShopperId: String
+    public let marketId: String
+    public let name: String
+    public let about: String
+    public let personalShopperId: String
     
     func parameterize() -> [String : AnyObject] {
         let parameters = [
@@ -41,7 +41,7 @@ public struct CreatePersonalShopper {
     var avatarUrl: String?
     var facebookProfile: AnyObject?
     
-    init(firstName: String, lastName: String, emailAddress: String) {
+    public init(firstName: String, lastName: String, emailAddress: String) {
         self.firstName = firstName
         self.lastName = lastName
         self.emailAddress = emailAddress
@@ -64,8 +64,8 @@ public struct CreatePersonalShopper {
     }
 }
 public struct RegisterForPushNotifications {
-    let personalShopper: PersonalShopper
-    let apn_device_token: String
+    public let personalShopper: PersonalShopper
+    public let apn_device_token: String
     
     func parameterize() -> [String : AnyObject] {
         let parameters = [
@@ -76,9 +76,9 @@ public struct RegisterForPushNotifications {
     }
 }
 public struct CreatePurchaseRequest {
-    let amount: NSDecimalNumber
-    let shoppingSession: ShoppingSession
-    let productSize: ProductSize
+    public let amount: NSDecimalNumber
+    public let shoppingSession: ShoppingSession
+    public let productSize: ProductSize
     
     func parameterize() -> [String : AnyObject] {
         guard let shoppingSessionId = shoppingSession.id else {
@@ -95,8 +95,8 @@ public struct CreatePurchaseRequest {
     }
 }
 public struct CreateCheckoutRequest {
-    let amount: NSDecimalNumber
-    let shoppingSessionId: String
+    public let amount: NSDecimalNumber
+    public let shoppingSessionId: String
     
     func parameterize() -> [String : AnyObject] {
         let parameters = [

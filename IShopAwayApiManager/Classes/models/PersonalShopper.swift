@@ -9,15 +9,15 @@ import Foundation
 import ObjectMapper
 
 public class PersonalShopper: Mappable {
-    static var sharedPersonalShopper: PersonalShopper?
+    public static var sharedPersonalShopper: PersonalShopper?
     
-    var id: String?
-    var firstName: String
-    var lastName: String
-    var emailAddress: String
-    var apnDeviceToken: String?
+    public var id: String?
+    public var firstName: String
+    public var lastName: String
+    public var emailAddress: String
+    public var apnDeviceToken: String?
     
-    init(firstName: String, lastName: String, emailAddress: String) {
+    public init(firstName: String, lastName: String, emailAddress: String) {
         self.firstName = firstName
         self.lastName = lastName
         self.emailAddress = emailAddress
@@ -35,7 +35,7 @@ public class PersonalShopper: Mappable {
         emailAddress <- map["email_address"]
         apnDeviceToken <- map["apn_device_token"]
     }
-    func persistUser() {
+    public static func persistUser() {
         guard let personalShopper = PersonalShopper.sharedPersonalShopper else {
             return
         }
@@ -51,7 +51,7 @@ public class PersonalShopper: Mappable {
         
         userDefaults.synchronize()
     }
-    static func getPersistedUser() -> PersonalShopper? {
+    public  static func getPersistedUser() -> PersonalShopper? {
         let userDefaults = NSUserDefaults.standardUserDefaults()
         
         guard let id = userDefaults.stringForKey("id") else {

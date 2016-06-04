@@ -10,15 +10,15 @@ import Foundation
 import ObjectMapper
 
 public class Shopper: Mappable {
-    static var sharedShopper: Shopper?
+    public static var sharedShopper: Shopper?
     
-    var id: String?
-    var firstName: String
-    var lastName: String
-    var emailAddress: String
-    var apnDeviceToken: String?
+    public var id: String?
+    public var firstName: String
+    public var lastName: String
+    public var emailAddress: String
+    public var apnDeviceToken: String?
     
-    init(firstName: String, lastName: String, emailAddress: String) {
+    public init(firstName: String, lastName: String, emailAddress: String) {
         self.firstName = firstName
         self.lastName = lastName
         self.emailAddress = emailAddress

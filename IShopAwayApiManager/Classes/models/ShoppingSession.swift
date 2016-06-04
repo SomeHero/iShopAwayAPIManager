@@ -10,15 +10,15 @@ import Foundation
 import ObjectMapper
 
 public class ShoppingSession: Mappable  {
-    static var sharedShoppingSession: ShoppingSession?
+    public static var sharedShoppingSession: ShoppingSession?
     
-    var id: String?
-    var shopper: Shopper?
-    var openTokSessionId: String?
-    var openTokToken: String?
-    var cart: [CartItem]!
+    public var id: String?
+    public var shopper: Shopper?
+    public var openTokSessionId: String?
+    public var openTokToken: String?
+    public var cart: [CartItem]!
     
-    init(shopper: Shopper, openTokSessionId: String, openTokToken: String) {
+    public init(shopper: Shopper, openTokSessionId: String, openTokToken: String) {
         self.shopper = shopper
         self.openTokSessionId = openTokSessionId
         self.openTokToken = openTokToken
@@ -36,11 +36,11 @@ public class ShoppingSession: Mappable  {
     }
 }
 public class CartItem: Mappable {
-    var itemName: String!
-    var itemLocalCost: NSDecimalNumber!
-    var itemShopperPrice: NSDecimalNumber!
+    public var itemName: String!
+    public var itemLocalCost: NSDecimalNumber!
+    public var itemShopperPrice: NSDecimalNumber!
     
-    init(itemName: String, itemLocalCost: NSDecimalNumber, itemShopperPrice: NSDecimalNumber) {
+    public init(itemName: String, itemLocalCost: NSDecimalNumber, itemShopperPrice: NSDecimalNumber) {
         self.itemName = itemName
         self.itemLocalCost = itemLocalCost
         self.itemShopperPrice = itemShopperPrice
