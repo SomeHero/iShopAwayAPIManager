@@ -36,4 +36,38 @@ public class Shopper: Mappable {
         emailAddress <- map["email_address"]
         apnDeviceToken <- map["apn_device_token"]
     }
+    public func persistUser() {
+        guard let shopper = Shopper.sharedShopper else {
+            return
+        }
+        
+        let userDefaults = NSUserDefaults.standardUserDefaults()
+        
+        userDefaults.setValuesForKeysWithDictionary([
+            "id": shopper.id!,
+            "first_name": shopper.firstName,
+            "last_name": shopper.lastName,
+            "email_address": shopper.emailAddress
+            ])
+        
+        userDefaults.synchronize()
+    }
+    public static func getPersistedUser() -> Shopper? {
+        let userDefaults = NSUserDefaults.standardUserDefaults()
+        
+        guard let id = userDefaults.stringForKey("id") else {
+            return nil
+        }
+        let firstName = userDefaults.stringForKey("first_name")!
+        let lastName = userDefaults.stringForKey("last_name")!
+        let emailAddress = userDefaults.stringForKey("email_address")!
+        
+        let shopper = Shopper(firstName: firstName, lastName: lastName, emailAddress: emailAddress)
+        shopper.id = id
+        if let apnDeviceToken = userDefaults.stringForKey("apn_device_token") {
+            shopper.apnDeviceToken = apnDeviceToken
+        }
+        
+        return shopper
+    }
 }

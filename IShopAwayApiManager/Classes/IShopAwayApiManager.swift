@@ -366,6 +366,27 @@ public class IShopAwayApiManager {
             }
         }
     }
+    public static func createShopper(createShopper: CreateShopper, success: (response: Shopper?) -> Void, failure: (error: ErrorType?, json: JSON?) -> Void) {
+        let params = createShopper.parameterize()
+        
+        
+        Alamofire.request(.POST, IShopAwayApiManager.kApiBaseUrl + "shoppers", parameters: params, encoding: .JSON)
+            .validate()
+            .responseObject { (response: Response<Shopper, NSError>) in
+                if let error = response.result.error {
+                    if let responseData = response.data {
+                        let jsonResults:JSON = JSON(data: responseData)
+                        
+                        failure(error: error, json: jsonResults)
+                    } else {
+                        failure(error: error, json: nil)
+                    }
+                }
+                if let shopper = response.result.value {
+                    success(response: shopper)
+                }
+        }
+    }
     public static func updateShopper(updateShopper: UpdateShopper, success: (response: Shopper?) -> Void, failure: (ErrorType?) -> Void) {
         let params = updateShopper.parameterize()
         
@@ -380,7 +401,7 @@ public class IShopAwayApiManager {
                 
         }
     }
-    public static func registerForPushNotifications(registerShopperForPushNotifications: RegisterShopperForPushNotifications, success: (response: Shopper) -> Void, failure: (ErrorType?) -> Void) {
+    public static func registerShopperForPushNotifications(registerShopperForPushNotifications: RegisterShopperForPushNotifications, success: (response: Shopper) -> Void, failure: (ErrorType?) -> Void) {
         let params = registerShopperForPushNotifications.parameterize()
         
         guard let shopperId = registerShopperForPushNotifications.shopper.id else {
@@ -500,8 +521,8 @@ public class IShopAwayApiManager {
                 }
         }
     }
-    public static func getPurchaseRequest(purchaseRequest: PurchaseRequest, success: (response: PurchaseRequest?) -> Void, failure: (ErrorType?) -> Void) {
-        Alamofire.request(.GET,  IShopAwayApiManager.kApiBaseUrl + "purchase_requests/\(purchaseRequest.id)")
+    public static func getPurchaseRequest(purchaseRequestId: String, success: (response: PurchaseRequest?) -> Void, failure: (ErrorType?) -> Void) {
+        Alamofire.request(.GET,  IShopAwayApiManager.kApiBaseUrl + "purchase_requests/\(purchaseRequestId)")
             .responseObject { (response: Response<PurchaseRequest, NSError>) in
                 if let error = response.result.error {
                     failure(error)
@@ -539,8 +560,8 @@ public class IShopAwayApiManager {
                 }
         }
     }
-    public static func getCheckoutRequest(checkoutRequest: CheckoutRequest, success: (response: CheckoutRequest?) -> Void, failure: (ErrorType?) -> Void) {
-        Alamofire.request(.GET,  IShopAwayApiManager.kApiBaseUrl + "checkout_requests/\(checkoutRequest.id)")
+    public static func getCheckoutRequest(checkoutRequestId: String, success: (response: CheckoutRequest?) -> Void, failure: (ErrorType?) -> Void) {
+        Alamofire.request(.GET,  IShopAwayApiManager.kApiBaseUrl + "checkout_requests/\(checkoutRequestId)")
             .responseObject { (response: Response<CheckoutRequest, NSError>) in
                 if let error = response.result.error {
                     failure(error)
