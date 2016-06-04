@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
   s.homepage         = 'https://github.com/somehero/IShopAwayApiManager'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'James Rhodes' => 'james@ishopaway.com' }
-  s.source           = { :git => 'https://github.com/somehero/IShopAwayApiManager.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/somehero/IShopAwayApiManager.git' }
   s.social_media_url = 'https://twitter.com/ishopaway'
 
   s.ios.deployment_target = '8.0'
