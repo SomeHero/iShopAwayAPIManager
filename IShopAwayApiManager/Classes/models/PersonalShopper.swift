@@ -15,6 +15,7 @@ public class PersonalShopper: Mappable {
     public var firstName: String
     public var lastName: String
     public var emailAddress: String
+    public var avatarUrl: String?
     public var apnDeviceToken: String?
     
     public init(firstName: String, lastName: String, emailAddress: String) {
@@ -33,6 +34,7 @@ public class PersonalShopper: Mappable {
         firstName <- map["first_name"]
         lastName <- map["last_name"]
         emailAddress <- map["email_address"]
+        avatarUrl <- map["avatar_url"]
         apnDeviceToken <- map["apn_device_token"]
     }
     public static func persistUser() {
@@ -48,6 +50,9 @@ public class PersonalShopper: Mappable {
             "last_name": personalShopper.lastName,
             "email_address": personalShopper.emailAddress
         ])
+        if let avatarUrl = personalShopper.avatarUrl {
+            userDefaults.setValue(avatarUrl, forKeyPath: "avatar_url")
+        }
         
         userDefaults.synchronize()
     }
@@ -63,6 +68,9 @@ public class PersonalShopper: Mappable {
 
         let personalShopper = PersonalShopper(firstName: firstName, lastName: lastName, emailAddress: emailAddress)
         personalShopper.id = id
+        if let avatarUrl = userDefaults.stringForKey("avatar_url") {
+            personalShopper.avatarUrl = avatarUrl
+        }
         if let apnDeviceToken = userDefaults.stringForKey("apn_device_token") {
             personalShopper.apnDeviceToken = apnDeviceToken
         }

@@ -145,18 +145,17 @@ public struct UpdateMarket {
     }
 }
 public struct PersonalShopperCheckin {
-    public let market: Market
-    public let personalShopper: PersonalShopper
+    public let marketId: String
+    public let personalShopperId: String
     
-    public init(market: Market, personalShopper: PersonalShopper) {
-        self.market = market
-        self.personalShopper = personalShopper
+    public init(marketId: String, personalShopperId: String) {
+        self.marketId = marketId
+        self.personalShopperId = personalShopperId
     }
     func parameterize() -> [String : AnyObject] {
         let parameters = [
-            "personal_shopper_id": personalShopper.id!
+            "personal_shopper_id": personalShopperId
         ]
-        
         return parameters
     }
 }
@@ -462,7 +461,7 @@ public class IShopAwayApiManager {
     public static func personalShopperCheckin(personalShopperCheckin: PersonalShopperCheckin, success: (response: Market?) -> Void, failure: (ErrorType?) -> Void) {
         let params = personalShopperCheckin.parameterize()
         
-        Alamofire.request(.PUT, IShopAwayApiManager.kApiBaseUrl + "markets/\(personalShopperCheckin.market.id)/checkin", parameters: params, encoding: .JSON)
+        Alamofire.request(.PUT, IShopAwayApiManager.kApiBaseUrl + "markets/\(personalShopperCheckin.marketId)/checkin", parameters: params, encoding: .JSON)
             .responseObject { (response: Response<Market, NSError>) in
                 if let error = response.result.error {
                     failure(error)
