@@ -11,7 +11,7 @@ import ObjectMapper
 
 public class PurchaseRequest: Mappable {
     public var id: String!
-    public  var shoppingSession: ShoppingSession!
+    public var shoppingSession: ShoppingSession!
     public var amount: NSDecimalNumber!
     public var status: String!
     
@@ -26,7 +26,7 @@ public class PurchaseRequest: Mappable {
     public func mapping(map: Map) {
         id <- map["_id"]
         shoppingSession <- map["shopping_session"]
-        amount <- map["amount"]
+        amount <- (map["shopper_amount"], NSDecimalNumberTransform())
         status <- map["status"]
     }
 }

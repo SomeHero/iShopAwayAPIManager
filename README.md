@@ -27,3 +27,4 @@ James Rhodes, jrhodes@weddingwire.com
 ## License
 
 IShopAwayApiManager is available under the MIT license. See the LICENSE file for more info.
+

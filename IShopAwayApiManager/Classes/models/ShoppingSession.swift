@@ -16,6 +16,7 @@ public class ShoppingSession: Mappable  {
     public var shopper: Shopper?
     public var openTokSessionId: String?
     public var openTokToken: String?
+    public var personalShopper: PersonalShopper?
     public var cart: [CartItem]!
     
     public init(shopper: Shopper, openTokSessionId: String, openTokToken: String) {
@@ -32,6 +33,7 @@ public class ShoppingSession: Mappable  {
         shopper <- map["shopper"]
         openTokSessionId <- map["opentok_session_id"]
         openTokToken <- map["opentok_token"]
+        personalShopper <- map["personal_shopper"]
         cart <- map["cart"]
     }
 }
