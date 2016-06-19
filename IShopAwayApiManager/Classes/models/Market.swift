@@ -28,7 +28,7 @@ public class Market: Mappable {
     public func mapping(map: Map) {
         id <- map["_id"]
         name <- map["name"]
-        about <- map["about"]
+        about <- map["description"]
         mainImageUrl <- map["main_image_url"]
     }
 }

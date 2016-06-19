@@ -1,6 +1,6 @@
 //
-//  Shopper.swift
-//  PersonalShopper
+//  User.swift
+//  User
 //
 //  Created by James Rhodes on 5/16/16.
 //  Copyright © 2016 James Rhodes. All rights reserved.
@@ -9,15 +9,14 @@
 import Foundation
 import ObjectMapper
 
-public class Shopper: Mappable {
-    public static var sharedShopper: Shopper?
+public class User: Mappable {
+    public static var sharedUser: User?
     
     public var id: String?
     public var firstName: String
     public var lastName: String
     public var emailAddress: String
-    public var apnDeviceToken: String?
-    
+
     public init(firstName: String, lastName: String, emailAddress: String) {
         self.firstName = firstName
         self.lastName = lastName
@@ -34,25 +33,24 @@ public class Shopper: Mappable {
         firstName <- map["first_name"]
         lastName <- map["last_name"]
         emailAddress <- map["email_address"]
-        apnDeviceToken <- map["apn_device_token"]
     }
     public func persistUser() {
-        guard let shopper = Shopper.sharedShopper else {
+        guard let user = User.sharedUser else {
             return
         }
         
         let userDefaults = NSUserDefaults.standardUserDefaults()
         
         userDefaults.setValuesForKeysWithDictionary([
-            "id": shopper.id!,
-            "first_name": shopper.firstName,
-            "last_name": shopper.lastName,
-            "email_address": shopper.emailAddress
-            ])
+            "id": user.id!,
+            "first_name": user.firstName,
+            "last_name": user.lastName,
+            "email_address": user.emailAddress
+        ])
         
         userDefaults.synchronize()
     }
-    public static func getPersistedShopper() -> Shopper? {
+    public static func getPersistedUser() -> User? {
         let userDefaults = NSUserDefaults.standardUserDefaults()
         
         guard let id = userDefaults.stringForKey("id") else {
@@ -62,12 +60,9 @@ public class Shopper: Mappable {
         let lastName = userDefaults.stringForKey("last_name")!
         let emailAddress = userDefaults.stringForKey("email_address")!
         
-        let shopper = Shopper(firstName: firstName, lastName: lastName, emailAddress: emailAddress)
-        shopper.id = id
-        if let apnDeviceToken = userDefaults.stringForKey("apn_device_token") {
-            shopper.apnDeviceToken = apnDeviceToken
-        }
+        let user = User(firstName: firstName, lastName: lastName, emailAddress: emailAddress)
+        user.id = id
         
-        return shopper
+        return user
     }
 }

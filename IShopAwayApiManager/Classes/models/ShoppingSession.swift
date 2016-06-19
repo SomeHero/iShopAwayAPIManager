@@ -13,13 +13,13 @@ public class ShoppingSession: Mappable  {
     public static var sharedShoppingSession: ShoppingSession?
     
     public var id: String?
-    public var shopper: Shopper?
+    public var shopper: User?
     public var openTokSessionId: String?
     public var openTokToken: String?
-    public var personalShopper: PersonalShopper?
+    public var personalShopper: User?
     public var cart: [CartItem]!
     
-    public init(shopper: Shopper, openTokSessionId: String, openTokToken: String) {
+    public init(shopper: User, openTokSessionId: String, openTokToken: String) {
         self.shopper = shopper
         self.openTokSessionId = openTokSessionId
         self.openTokToken = openTokToken
@@ -30,10 +30,10 @@ public class ShoppingSession: Mappable  {
     
     public func mapping(map: Map) {
         id <- map["_id"]
-        shopper <- map["shopper"]
+        //shopper <- map["shopper"]
         openTokSessionId <- map["opentok_session_id"]
         openTokToken <- map["opentok_token"]
-        personalShopper <- map["personal_shopper"]
+        //personalShopper <- map["personal_shopper"]
         cart <- map["cart"]
     }
 }

@@ -56,7 +56,7 @@ public class PersonalShopper: Mappable {
         
         userDefaults.synchronize()
     }
-    public  static func getPersistedUser() -> PersonalShopper? {
+    public  static func getPersistedPersonalShopper() -> PersonalShopper? {
         let userDefaults = NSUserDefaults.standardUserDefaults()
         
         guard let id = userDefaults.stringForKey("id") else {

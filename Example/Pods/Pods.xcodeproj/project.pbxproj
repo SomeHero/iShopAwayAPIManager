@@ -50,6 +50,7 @@
 		4081EA628AF0B73AC51FFB9D7AB3B89E /* Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B738B5D2DF83E5939ED432159535BD /* Manager.swift */; };
 		415F29FE4E9D970954C46CD3CF4AE345 /* SatisfyAnyOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8DD472B34ABCAD040B0F2CDEE5E688 /* SatisfyAnyOf.swift */; };
 		41AD3941E30FCE4E67B4219F01494BC0 /* SwiftyJSON-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 86FF1ADA2D47B19021F0512D3BF1921F /* SwiftyJSON-dummy.m */; };
+		42A3B7CD1D16178300C11D52 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A3B7CB1D1616E100C11D52 /* User.swift */; };
 		47CBCE8837CE75AE1B7484A63CE387ED /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF31284DAF46EC84061228506BE48688 /* Foundation.framework */; };
 		486B74C8EFEB68AD25CE128F3051E432 /* ObjCExpectation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46E64E42C84E5ADC1B5DE87DD574EBB /* ObjCExpectation.swift */; };
 		48903DF2FF8D2378A210831BB05CD9F3 /* AlamofireObjectMapper-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 63792E146584CB0169172E51E860BD8E /* AlamofireObjectMapper-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -300,6 +301,7 @@
 		407362A9E495934BAE47250CDD8B663E /* Nimble.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Nimble.h; path = Sources/Nimble/Nimble.h; sourceTree = "<group>"; };
 		416D36E64A47BAB249AC745D0CA11A3F /* Stream.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Stream.swift; path = Source/Stream.swift; sourceTree = "<group>"; };
 		422DF38B0B824E808959FEDBB7E9D3E7 /* Pods-IShopAwayApiManager_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-IShopAwayApiManager_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		42A3B7CB1D1616E100C11D52 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		42CDF43CC48895BB7C2A0285993D4E88 /* BeEmpty.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BeEmpty.swift; path = Sources/Nimble/Matchers/BeEmpty.swift; sourceTree = "<group>"; };
 		44F445E4A4394C0A84897B2C1ABE526F /* Quick.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Quick.h; path = Sources/Quick/Quick.h; sourceTree = "<group>"; };
 		469A216DD5D0D87D4833E0B604D4DAA1 /* Pods-IShopAwayApiManager_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-IShopAwayApiManager_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
@@ -827,6 +829,7 @@
 				4E2471B491404A2452C33607C35CCE20 /* PurchaseRequest.swift */,
 				38DFB5C1902AE19815BD9E032BA32013 /* Shopper.swift */,
 				3CAA720857BA1EF7FE7565817E9540CB /* ShoppingSession.swift */,
+				42A3B7CB1D1616E100C11D52 /* User.swift */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -1256,6 +1259,7 @@
 				35C0A33F32A968C481C7BA1CE5161A67 /* IShopAwayApiManager-dummy.m in Sources */,
 				334E4E26B0A46075265A1E347A3BA4E2 /* Market.swift in Sources */,
 				619AE56D41A7936A54AAE59CD1017D18 /* PersonalShopper.swift in Sources */,
+				42A3B7CD1D16178300C11D52 /* User.swift in Sources */,
 				D21BE4F5CD78B7161994021EA804C1D6 /* PurchaseRequest.swift in Sources */,
 				2A633DA783DE1A094C78A38AB0263AD1 /* Shopper.swift in Sources */,
 				57576BDD6237E6351B965C5B54F119DA /* ShoppingSession.swift in Sources */,
