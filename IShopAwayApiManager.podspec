@@ -11,11 +11,11 @@ Pod::Spec.new do |s|
   s.version          = '0.1.12'
   s.summary          = 'Shared API for iShopAway.'
   s.description      = 'Shared API for iShopAway'
-  s.homepage         = 'https://github.com/somehero/IShopAwayApiManager'
+  s.homepage         = 'https://github.com/iShopAway/ishopaway-apimanager-ios'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'James Rhodes' => 'james@ishopaway.com' }
-  s.source           = { :git => 'https://github.com/somehero/IShopAwayApiManager.git' }
-  s.social_media_url = 'https://twitter.com/ishopaway'
+  s.source           = { :git => 'https://github.com/iShopAway/ishopaway-apimanager-ios' }
+  s.social_media_url = 'https://twitter.com/ishopawayapp'
 
   s.ios.deployment_target = '8.0'
 
