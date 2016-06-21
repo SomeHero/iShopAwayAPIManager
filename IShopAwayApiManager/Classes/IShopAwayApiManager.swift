@@ -199,14 +199,18 @@ public struct RegisterForPushNotifications {
     }
 }
 public struct CreatePurchaseRequest {
+    public let name: String
     public let amount: NSDecimalNumber
     public let shoppingSession: ShoppingSession
     public let productSize: ProductSize
+    public let productUrl: String
     
-    public init(amount: NSDecimalNumber, shoppingSession: ShoppingSession, productSize: ProductSize) {
+    public init(name: String, amount: NSDecimalNumber, shoppingSession: ShoppingSession, productSize: ProductSize, productUrl: String) {
+        self.name = name
         self.amount = amount
         self.shoppingSession = shoppingSession
         self.productSize = productSize
+        self.productUrl = productUrl
     }
     func parameterize() -> [String : AnyObject] {
         guard let shoppingSessionId = shoppingSession.id else {
@@ -214,9 +218,11 @@ public struct CreatePurchaseRequest {
         }
         
         let parameters = [
+            "item_name": name,
             "shopping_session_id": shoppingSessionId,
             "amount": amount,
-            "product_size": productSize.rawValue
+            "product_size": productSize.rawValue,
+            "image_url": productUrl
         ]
         
         return parameters
