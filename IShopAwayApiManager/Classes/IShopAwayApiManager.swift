@@ -214,6 +214,25 @@ public struct CreatePaymentMethod {
         return parameters
     }
 }
+public struct CreateAddress {
+    public let userId: String
+    public let address1: String
+    public let postalCode: String
+    
+    public init(userId: String, address1: String, postalCode: String) {
+        self.userId = userId
+        self.address1 = address1
+        self.postalCode = postalCode
+    }
+    func parameterize() -> [String : AnyObject] {
+        let parameters = [
+            "address_1": address1,
+            "postal_code": postalCode
+        ]
+        
+        return parameters
+    }
+}
 public struct CreatePurchaseRequest {
     public let name: String
     public let amount: NSDecimalNumber
@@ -474,6 +493,20 @@ public class IShopAwayApiManager {
                 }
                 if let paymentMethod = response.result.value {
                     success(response: paymentMethod)
+                }
+        }
+    }
+    public func addAddress(createAddress: CreateAddress, success: (response: Address)  -> Void, failure: (error: ErrorType?) -> Void) {
+        let params = createAddress.parameterize()
+        
+        Alamofire.request(.POST, apiBaseUrl + "users/\(createAddress.userId)" + "/shipping_addresses", parameters: params, encoding: .JSON, headers: headers)
+            .validate()
+            .responseObject { (response: Response<Address, NSError>) in
+                if let error = response.result.error {
+                    failure(error: error)
+                }
+                if let address = response.result.value {
+                    success(response: address)
                 }
         }
     }

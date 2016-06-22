@@ -17,6 +17,7 @@ public class User: Mappable {
     public var lastName: String!
     public var emailAddress: String!
     public var paymentMethods: [PaymentMethod] = []
+    public var shippingAddresses: [Address] = []
 
     public init(firstName: String, lastName: String, emailAddress: String) {
         self.firstName = firstName
@@ -33,6 +34,7 @@ public class User: Mappable {
         lastName <- map["last_name"]
         emailAddress <- map["email_address"]
         paymentMethods <- map["payment_methods"]
+        shippingAddresses <- map["shipping_addresses"]
     }
     public func persistUser() {
         guard let user = User.sharedUser else {
