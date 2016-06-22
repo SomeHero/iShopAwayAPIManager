@@ -198,6 +198,22 @@ public struct RegisterForPushNotifications {
         return parameters
     }
 }
+public struct CreatePaymentMethod {
+    public let userId: String
+    public let stripeToken: String
+    
+    public init(userId: String, stripeToken: String) {
+        self.userId = userId
+        self.stripeToken = stripeToken
+    }
+    func parameterize() -> [String : AnyObject] {
+        let parameters = [
+            "stripe_token": stripeToken
+        ]
+        
+        return parameters
+    }
+}
 public struct CreatePurchaseRequest {
     public let name: String
     public let amount: NSDecimalNumber
@@ -443,6 +459,21 @@ public class IShopAwayApiManager {
                     } else {
                         failure(error: nil)
                     }
+                }
+        
+        }
+    }
+    public func addPaymentMethod(createPaymentMethod: CreatePaymentMethod, success: (response: PaymentMethod)  -> Void, failure: (error: ErrorType?) -> Void) {
+        let params = createPaymentMethod.parameterize()
+        
+        Alamofire.request(.POST, apiBaseUrl + "users/\(createPaymentMethod.userId)" + "/payment_methods", parameters: params, encoding: .JSON, headers: headers)
+            .validate()
+            .responseObject { (response: Response<PaymentMethod, NSError>) in
+                if let error = response.result.error {
+                    failure(error: error)
+                }
+                if let paymentMethod = response.result.value {
+                    success(response: paymentMethod)
                 }
         }
     }

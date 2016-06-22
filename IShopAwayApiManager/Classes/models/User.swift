@@ -12,10 +12,11 @@ import ObjectMapper
 public class User: Mappable {
     public static var sharedUser: User?
     
-    public var id: String?
-    public var firstName: String
-    public var lastName: String
-    public var emailAddress: String
+    public var id: String!
+    public var firstName: String!
+    public var lastName: String!
+    public var emailAddress: String!
+    public var paymentMethods: [PaymentMethod] = []
 
     public init(firstName: String, lastName: String, emailAddress: String) {
         self.firstName = firstName
@@ -23,9 +24,7 @@ public class User: Mappable {
         self.emailAddress = emailAddress
     }
     public required init?(_ map: Map){
-        self.firstName = ""
-        self.lastName = ""
-        self.emailAddress = ""
+        mapping(map)
     }
     
     public func mapping(map: Map) {
@@ -33,6 +32,7 @@ public class User: Mappable {
         firstName <- map["first_name"]
         lastName <- map["last_name"]
         emailAddress <- map["email_address"]
+        paymentMethods <- map["payment_methods"]
     }
     public func persistUser() {
         guard let user = User.sharedUser else {
