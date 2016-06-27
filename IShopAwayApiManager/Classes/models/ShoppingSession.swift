@@ -33,17 +33,19 @@ public class ShoppingSession: Mappable  {
         //shopper <- map["shopper"]
         openTokSessionId <- map["opentok_session_id"]
         openTokToken <- map["opentok_token"]
-        //personalShopper <- map["personal_shopper"]
+        personalShopper <- map["personal_shopper"]
         cart <- map["cart"]
     }
 }
 public class CartItem: Mappable {
     public var itemName: String!
+    public var imageUrl: String!
     public var itemLocalCost: NSDecimalNumber!
     public var itemShopperPrice: NSDecimalNumber!
     
-    public init(itemName: String, itemLocalCost: NSDecimalNumber, itemShopperPrice: NSDecimalNumber) {
+    public init(itemName: String, imageUrl: String, itemLocalCost: NSDecimalNumber, itemShopperPrice: NSDecimalNumber) {
         self.itemName = itemName
+        self.imageUrl = imageUrl
         self.itemLocalCost = itemLocalCost
         self.itemShopperPrice = itemShopperPrice
     }
@@ -53,6 +55,7 @@ public class CartItem: Mappable {
     
     public func mapping(map: Map) {
         self.itemName <- map["item_name"]
+        self.imageUrl <- map["image_url"]
         self.itemLocalCost <- (map["item_local_cost"], NSDecimalNumberTransform())
         self.itemShopperPrice <- (map["item_shopper_price"], NSDecimalNumberTransform())
     }

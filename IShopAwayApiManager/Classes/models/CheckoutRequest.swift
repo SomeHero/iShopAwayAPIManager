@@ -12,6 +12,7 @@ import ObjectMapper
 public class CheckoutRequest: Mappable {
     public var id: String!
     public var shoppingSession: ShoppingSession!
+    public var currency: String!
     public var amount: Double!
     public var status: String!
     
@@ -27,7 +28,8 @@ public class CheckoutRequest: Mappable {
     public func mapping(map: Map) {
         id <- map["_id"]
         shoppingSession <- map["shopping_session"]
-        amount <- map["amount"]
+        amount <- map["shopper_checkout_amount"]
+        currency <- map["shopper_checkout_currency"]
         status <- map["status"]
     }
 }

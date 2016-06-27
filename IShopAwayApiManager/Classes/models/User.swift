@@ -16,6 +16,7 @@ public class User: Mappable {
     public var firstName: String!
     public var lastName: String!
     public var emailAddress: String!
+    public var avatarUrl: String!
     public var paymentMethods: [PaymentMethod] = []
     public var shippingAddresses: [Address] = []
 
@@ -33,6 +34,7 @@ public class User: Mappable {
         firstName <- map["first_name"]
         lastName <- map["last_name"]
         emailAddress <- map["email_address"]
+        avatarUrl <- map["avatar_url"]
         paymentMethods <- map["payment_methods"]
         shippingAddresses <- map["shipping_addresses"]
     }

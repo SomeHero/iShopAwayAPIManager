@@ -107,17 +107,19 @@ public struct CreateShoppingSession {
 }
 public struct ShoppingSessionCheckout {
     let shoppingSession: ShoppingSession
-    let stripeToken: String
+    //let stripeToken: String
     
-    public init(shoppingSession: ShoppingSession, stripeToken: String) {
+    public init(shoppingSession: ShoppingSession) {
         self.shoppingSession = shoppingSession
-        self.stripeToken = stripeToken
+        //self.stripeToken = stripeToken
     }
     func parameterize() -> [String : AnyObject] {
-        let parameters = [
-            "stripe_token": stripeToken
-        ]
-        
+//        let parameters = [
+//            "stripe_token": stripeToken
+//        ]
+//        
+//        return parameters
+        let parameters:[String : AnyObject] = [:]
         return parameters
     }
 }
@@ -274,7 +276,7 @@ public struct CreateCheckoutRequest {
     func parameterize() -> [String : AnyObject] {
         let parameters = [
             "shopping_session_id": shoppingSessionId,
-            "local_checkout_amount": amount
+            "amount": amount
         ]
         
         return parameters
@@ -370,14 +372,28 @@ public class IShopAwayApiManager {
     
         return headers.count > 0 ? headers : nil;
     }
-    public func authenticate(authenticateUser: AuthenticateUser, success: (shopperId: String, token: String) -> Void, failure: (error: ErrorType?) -> Void) {
+    public func authenticate(authenticateUser: AuthenticateUser, success: (shopperId: String, token: String) -> Void, failure: (error: ErrorType?, errorDictionary: [String: AnyObject]?) -> Void) {
         let params = authenticateUser.parameterize()
         
         Alamofire.request(.POST,  apiBaseUrl + "/authenticate", parameters: params, encoding: .JSON)
             .validate()
             .responseJSON { response in
                 if let error = response.result.error {
-                    failure(error: error)
+                    var errorResponse: [String: AnyObject]? = [:]
+                    
+                    if let data = response.data {
+                        do {
+                            errorResponse = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String:AnyObject]
+                        } catch let error as NSError {
+                            failure(error: error, errorDictionary: nil)
+                        }
+                        catch let error {
+                            failure(error: error, errorDictionary: nil)
+                        }
+                        failure(error: error, errorDictionary: errorResponse)
+                    } else {
+                        failure(error: error, errorDictionary: nil)
+                    }
                 }
                 if let result = response.result.value {
                     if let userId = result["user_id"] as? String, token = result["token"] as? String {
@@ -385,19 +401,33 @@ public class IShopAwayApiManager {
                         
                         success(shopperId: userId, token: token)
                     } else {
-                        failure(error: nil)
+                        failure(error: nil, errorDictionary: nil)
                     }
                 }
         }
     }
-    public func authenticateWithFacebook(authenticateFacebookUser: AuthenticateFacebookUser, success: (userId: String, token: String) -> Void, failure: (error: ErrorType?) -> Void) {
+    public func authenticateWithFacebook(authenticateFacebookUser: AuthenticateFacebookUser, success: (userId: String, token: String) -> Void, failure: (error: ErrorType?, errorDictionary: [String: AnyObject]?) -> Void) {
         let params = authenticateFacebookUser.parameterize()
         
         Alamofire.request(.POST,  apiBaseUrl + "authenticate/facebook", parameters: params, encoding: .JSON)
             .validate()
             .responseJSON { response in
                 if let error = response.result.error {
-                    failure(error: error)
+                    var errorResponse: [String: AnyObject]? = [:]
+                    
+                    if let data = response.data {
+                        do {
+                            errorResponse = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String:AnyObject]
+                        } catch let error as NSError {
+                            failure(error: error, errorDictionary: nil)
+                        }
+                        catch let error {
+                            failure(error: error, errorDictionary: nil)
+                        }
+                        failure(error: error, errorDictionary: errorResponse)
+                    } else {
+                        failure(error: error, errorDictionary: nil)
+                    }
                 }
                 if let result = response.result.value {
                     if let userId = result["user_id"] as? String, token = result["token"] as? String {
@@ -405,19 +435,33 @@ public class IShopAwayApiManager {
                         
                         success(userId: userId, token: token)
                     } else {
-                        failure(error: nil)
+                        failure(error: nil, errorDictionary: nil)
                     }
                 }
         }
     }
-    public func createUser(createUser: CreateUser, success: (userId: String, token: String) -> Void, failure: (error: ErrorType?) -> Void) {
+    public func createUser(createUser: CreateUser, success: (userId: String, token: String) -> Void, failure: (error: ErrorType?, errorDictionary: [String: AnyObject]?) -> Void) {
         let params = createUser.parameterize()
         
         Alamofire.request(.POST,  apiBaseUrl + "users", parameters: params, encoding: .JSON)
             .validate()
             .responseJSON { response in
                 if let error = response.result.error {
-                    failure(error: error)
+                    var errorResponse: [String: AnyObject]? = [:]
+                    
+                    if let data = response.data {
+                        do {
+                            errorResponse = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String:AnyObject]
+                        } catch let error as NSError {
+                            failure(error: error, errorDictionary: nil)
+                        }
+                        catch let error {
+                            failure(error: error, errorDictionary: nil)
+                        }
+                        failure(error: error, errorDictionary: errorResponse)
+                    } else {
+                        failure(error: error, errorDictionary: nil)
+                    }
                 }
                 if let result = response.result.value {
                     if let userId = result["user_id"] as? String, token = result["token"] as? String {
@@ -425,19 +469,33 @@ public class IShopAwayApiManager {
                         
                         success(userId: userId, token: token)
                     } else {
-                        failure(error: nil)
+                        failure(error: nil, errorDictionary: nil)
                     }
                 }
         }
     }
-    public func createUserWithFaceook(createFacebookUser: CreateFacebookUser, success: (userId: String, token: String) -> Void, failure: (error: ErrorType?) -> Void) {
+    public func createUserWithFaceook(createFacebookUser: CreateFacebookUser, success: (userId: String, token: String) -> Void, failure: (error: ErrorType?, errorDictionary: [String: AnyObject]?) -> Void) {
         let params = createFacebookUser.parameterize()
         
         Alamofire.request(.POST,  apiBaseUrl + "users", parameters: params, encoding: .JSON)
             .validate()
             .responseJSON { response in
                 if let error = response.result.error {
-                    failure(error: error)
+                    var errorResponse: [String: AnyObject]? = [:]
+                    
+                    if let data = response.data {
+                        do {
+                            errorResponse = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String:AnyObject]
+                        } catch let error as NSError {
+                            failure(error: error, errorDictionary: nil)
+                        }
+                        catch let error {
+                            failure(error: error, errorDictionary: nil)
+                        }
+                        failure(error: error, errorDictionary: errorResponse)
+                    } else {
+                        failure(error: error, errorDictionary: nil)
+                    }
                 }
                 if let result = response.result.value {
                     if let userId = result["user_id"] as? String, token = result["token"] as? String {
@@ -445,77 +503,149 @@ public class IShopAwayApiManager {
                         
                         success(userId: userId, token: token)
                     } else {
-                        failure(error: nil)
+                        failure(error: nil, errorDictionary: nil)
                     }
                 }
         }
     }
-    public func me(success: (response: User) -> Void, failure: (error: ErrorType?) -> Void) {
+    public func me(success: (response: User) -> Void, failure: (error: ErrorType?, errorDictionary: [String: AnyObject]?) -> Void) {
         Alamofire.request(.GET,  apiBaseUrl + "me", parameters: nil, encoding: .JSON, headers: headers)
             .validate()
             .responseObject { (response: Response<User, NSError>) in
                 if let error = response.result.error {
-                    failure(error: error)
+                    var errorResponse: [String: AnyObject]? = [:]
+                    
+                    if let data = response.data {
+                        do {
+                            errorResponse = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String:AnyObject]
+                        } catch let error as NSError {
+                            failure(error: error, errorDictionary: nil)
+                        }
+                        catch let error {
+                            failure(error: error, errorDictionary: nil)
+                        }
+                        failure(error: error, errorDictionary: errorResponse)
+                    } else {
+                        failure(error: error, errorDictionary: nil)
+                    }
                 }
                 if let user = response.result.value {
                     success(response: user)
+                } else {
+                    failure(error: nil, errorDictionary: nil)
                 }
                 
         }
     }
-    public func registerForPushNotifications(registerForPushNotifications: RegisterForPushNotifications, success: (success: Bool) -> Void, failure: (error: ErrorType?) -> Void) {
+    public func registerForPushNotifications(registerForPushNotifications: RegisterForPushNotifications, success: (success: Bool) -> Void, failure: (error: ErrorType?, errorDictionary: [String: AnyObject]?) -> Void) {
         let params = registerForPushNotifications.parameterize()
         
         Alamofire.request(.POST, apiBaseUrl + "devices", parameters: params, encoding: .JSON, headers: headers)
             .validate()
             .responseJSON { response in
                 if let error = response.result.error {
-                    failure(error: error)
+                    var errorResponse: [String: AnyObject]? = [:]
+                    
+                    if let data = response.data {
+                        do {
+                            errorResponse = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String:AnyObject]
+                        } catch let error as NSError {
+                            failure(error: error, errorDictionary: nil)
+                        }
+                        catch let error {
+                            failure(error: error, errorDictionary: nil)
+                        }
+                        failure(error: error, errorDictionary: errorResponse)
+                    } else {
+                        failure(error: error, errorDictionary: nil)
+                    }
                 }
                 if let result = response.result.value {
                     if let isSuccess = result["success"] as? Bool {
                         success(success: isSuccess)
                     } else {
-                        failure(error: nil)
+                        failure(error: nil, errorDictionary: nil)
                     }
                 }
         
         }
     }
-    public func addPaymentMethod(createPaymentMethod: CreatePaymentMethod, success: (response: PaymentMethod)  -> Void, failure: (error: ErrorType?) -> Void) {
+    public func addPaymentMethod(createPaymentMethod: CreatePaymentMethod, success: (response: PaymentMethod)  -> Void, failure: (error: ErrorType?, errorDictionary: [String: AnyObject]?) -> Void) {
         let params = createPaymentMethod.parameterize()
         
         Alamofire.request(.POST, apiBaseUrl + "users/\(createPaymentMethod.userId)" + "/payment_methods", parameters: params, encoding: .JSON, headers: headers)
             .validate()
             .responseObject { (response: Response<PaymentMethod, NSError>) in
                 if let error = response.result.error {
-                    failure(error: error)
+                    var errorResponse: [String: AnyObject]? = [:]
+                    
+                    if let data = response.data {
+                        do {
+                            errorResponse = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String:AnyObject]
+                        } catch let error as NSError {
+                            failure(error: error, errorDictionary: nil)
+                        }
+                        catch let error {
+                            failure(error: error, errorDictionary: nil)
+                        }
+                        failure(error: error, errorDictionary: errorResponse)
+                    } else {
+                        failure(error: error, errorDictionary: nil)
+                    }
                 }
                 if let paymentMethod = response.result.value {
                     success(response: paymentMethod)
                 }
         }
     }
-    public func addAddress(createAddress: CreateAddress, success: (response: Address)  -> Void, failure: (error: ErrorType?) -> Void) {
+    public func addAddress(createAddress: CreateAddress, success: (response: Address)  -> Void, failure: (error: ErrorType?, errorDictionary: [String: AnyObject]?) -> Void) {
         let params = createAddress.parameterize()
         
         Alamofire.request(.POST, apiBaseUrl + "users/\(createAddress.userId)" + "/shipping_addresses", parameters: params, encoding: .JSON, headers: headers)
             .validate()
             .responseObject { (response: Response<Address, NSError>) in
                 if let error = response.result.error {
-                    failure(error: error)
+                    var errorResponse: [String: AnyObject]? = [:]
+                    
+                    if let data = response.data {
+                        do {
+                            errorResponse = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String:AnyObject]
+                        } catch let error as NSError {
+                            failure(error: error, errorDictionary: nil)
+                        }
+                        catch let error {
+                            failure(error: error, errorDictionary: nil)
+                        }
+                        failure(error: error, errorDictionary: errorResponse)
+                    } else {
+                        failure(error: error, errorDictionary: nil)
+                    }
                 }
                 if let address = response.result.value {
                     success(response: address)
                 }
         }
     }
-    public func getShoppingSession(shoppingSessionId: String, success: (response: ShoppingSession) -> Void, failure: (error: ErrorType?) -> Void) {
+    public func getShoppingSession(shoppingSessionId: String, success: (response: ShoppingSession) -> Void, failure: (error: ErrorType?, errorDictionary: [String: AnyObject]?) -> Void) {
         Alamofire.request(.GET,  apiBaseUrl + "shopping_sessions/\(shoppingSessionId)", parameters: nil, encoding: .JSON, headers: headers)
             .validate()
             .responseObject { (response: Response<ShoppingSession, NSError>) in
                 if let error = response.result.error {
-                    failure(error: error)
+                    var errorResponse: [String: AnyObject]? = [:]
+                    
+                    if let data = response.data {
+                        do {
+                            errorResponse = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String:AnyObject]
+                        } catch let error as NSError {
+                            failure(error: error, errorDictionary: nil)
+                        }
+                        catch let error {
+                            failure(error: error, errorDictionary: nil)
+                        }
+                        failure(error: error, errorDictionary: errorResponse)
+                    } else {
+                        failure(error: error, errorDictionary: nil)
+                    }
                 }
                 if let shoppingSession = response.result.value {
                     success(response: shoppingSession)
@@ -551,14 +681,29 @@ public class IShopAwayApiManager {
                 }
         }
     }
-    public func checkout(shoppingSessionCheckout: ShoppingSessionCheckout, success: (response: ShoppingSession) -> Void, failure: (ErrorType?) -> Void) {
+    public func checkout(shoppingSessionCheckout: ShoppingSessionCheckout, success: (response: ShoppingSession) -> Void, failure: (error: ErrorType?, errorDictionary: [String: AnyObject]?) -> Void) {
         let params = shoppingSessionCheckout.parameterize()
         
         if let shoppingSessionId = shoppingSessionCheckout.shoppingSession.id {
             Alamofire.request(.POST, apiBaseUrl + "shopping_sessions/\(shoppingSessionId)/checkout", parameters: params, encoding: .JSON, headers: headers)
+                .validate()
                 .responseObject { (response: Response<ShoppingSession, NSError>) in
                     if let error = response.result.error {
-                        failure(error)
+                        var errorResponse: [String: AnyObject]? = [:]
+                        
+                        if let data = response.data {
+                            do {
+                                errorResponse = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String:AnyObject]
+                            } catch let error as NSError {
+                                failure(error: error, errorDictionary: nil)
+                            }
+                            catch let error {
+                                failure(error: error, errorDictionary: nil)
+                            }
+                            failure(error: error, errorDictionary: errorResponse)
+                        } else {
+                            failure(error: error, errorDictionary: nil)
+                        }
                     }
                     if let shoppingSession = response.result.value {
                         success(response: shoppingSession)
@@ -566,14 +711,29 @@ public class IShopAwayApiManager {
             }
         }
     }
-    public func addShipping(createShippingInformation: CreateShippingInformation, success: (response: ShoppingSession) -> Void, failure: (ErrorType?) -> Void) {
+    public func addShipping(createShippingInformation: CreateShippingInformation, success: (response: ShoppingSession) -> Void, failure: (error: ErrorType?, errorDictionary: [String: AnyObject]?) -> Void) {
         let params = createShippingInformation.parameterize()
         
         if let shoppingSessionId = createShippingInformation.shoppingSession.id {
             Alamofire.request(.POST, apiBaseUrl + "shopping_sessions/\(shoppingSessionId)/shipping", parameters: params, encoding: .JSON, headers: headers)
+                .validate()
                 .responseObject { (response: Response<ShoppingSession, NSError>) in
                     if let error = response.result.error {
-                        failure(error)
+                        var errorResponse: [String: AnyObject]? = [:]
+                        
+                        if let data = response.data {
+                            do {
+                                errorResponse = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String:AnyObject]
+                            } catch let error as NSError {
+                                failure(error: error, errorDictionary: nil)
+                            }
+                            catch let error {
+                                failure(error: error, errorDictionary: nil)
+                            }
+                            failure(error: error, errorDictionary: errorResponse)
+                        } else {
+                            failure(error: error, errorDictionary: nil)
+                        }
                     }
                     if let shoppingSession = response.result.value {
                         success(response: shoppingSession)
@@ -581,11 +741,26 @@ public class IShopAwayApiManager {
             }
         }
     }
-    public func getMarkets(success: (response: [Market]?) -> Void, failure: (ErrorType?) -> Void) {
+    public func getMarkets(success: (response: [Market]?) -> Void, failure: (error: ErrorType?, errorDictionary: [String: AnyObject]?) -> Void) {
         Alamofire.request(.GET,  apiBaseUrl + "markets")
+            .validate()
             .responseArray { (response: Response<[Market], NSError>) in
                 if let error = response.result.error {
-                    failure(error)
+                    var errorResponse: [String: AnyObject]? = [:]
+                    
+                    if let data = response.data {
+                        do {
+                            errorResponse = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String:AnyObject]
+                        } catch let error as NSError {
+                            failure(error: error, errorDictionary: nil)
+                        }
+                        catch let error {
+                            failure(error: error, errorDictionary: nil)
+                        }
+                        failure(error: error, errorDictionary: errorResponse)
+                    } else {
+                        failure(error: error, errorDictionary: nil)
+                    }
                 }
                 if let markets = response.result.value {
                     success(response: markets)
@@ -593,13 +768,28 @@ public class IShopAwayApiManager {
             }
     
     }
-    public func updateMarket(updateMarket: UpdateMarket, success: (response: Market?) -> Void, failure: (ErrorType?) -> Void) {
+    public func updateMarket(updateMarket: UpdateMarket, success: (response: Market?) -> Void, failure: (error: ErrorType?, errorDictionary: [String: AnyObject]?) -> Void) {
         let params = updateMarket.parameterize()
         
         Alamofire.request(.PUT, apiBaseUrl + "markets/\(updateMarket.marketId)", parameters: params, encoding: .JSON, headers: headers)
+            .validate()
             .responseObject { (response: Response<Market, NSError>) in
                 if let error = response.result.error {
-                    failure(error)
+                    var errorResponse: [String: AnyObject]? = [:]
+                    
+                    if let data = response.data {
+                        do {
+                            errorResponse = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String:AnyObject]
+                        } catch let error as NSError {
+                            failure(error: error, errorDictionary: nil)
+                        }
+                        catch let error {
+                            failure(error: error, errorDictionary: nil)
+                        }
+                        failure(error: error, errorDictionary: errorResponse)
+                    } else {
+                        failure(error: error, errorDictionary: nil)
+                    }
                 }
                 if let market = response.result.value {
                     success(response: market)
@@ -607,13 +797,28 @@ public class IShopAwayApiManager {
                 
         }
     }
-    public func personalShopperCheckin(personalShopperCheckin: PersonalShopperCheckin, success: (response: Market?) -> Void, failure: (ErrorType?) -> Void) {
+    public func personalShopperCheckin(personalShopperCheckin: PersonalShopperCheckin, success: (response: Market?) -> Void, failure: (error: ErrorType?, errorDictionary: [String: AnyObject]?) -> Void) {
         let params = personalShopperCheckin.parameterize()
         
         Alamofire.request(.POST, apiBaseUrl + "markets/\(personalShopperCheckin.marketId)/checkin", parameters: params, encoding: .JSON, headers: headers)
+            .validate()
             .responseObject { (response: Response<Market, NSError>) in
                 if let error = response.result.error {
-                    failure(error)
+                    var errorResponse: [String: AnyObject]? = [:]
+                    
+                    if let data = response.data {
+                        do {
+                            errorResponse = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String:AnyObject]
+                        } catch let error as NSError {
+                            failure(error: error, errorDictionary: nil)
+                        }
+                        catch let error {
+                            failure(error: error, errorDictionary: nil)
+                        }
+                        failure(error: error, errorDictionary: errorResponse)
+                    } else {
+                        failure(error: error, errorDictionary: nil)
+                    }
                 }
                 if let market = response.result.value {
                     success(response: market)
@@ -621,11 +826,26 @@ public class IShopAwayApiManager {
                 
         }
     }
-    public func publishFeed(shoppingSessionId: String, success: (response: ShoppingSession) -> Void, failure: (ErrorType?) -> Void) {
+    public func publishFeed(shoppingSessionId: String, success: (response: ShoppingSession) -> Void, failure: (error: ErrorType?, errorDictionary: [String: AnyObject]?) -> Void) {
         Alamofire.request(.POST, apiBaseUrl + "shopping_sessions/" + shoppingSessionId + "/publish", parameters: nil, encoding: .JSON, headers: headers)
+            .validate()
             .responseObject { (response: Response<ShoppingSession, NSError>) in
                 if let error = response.result.error {
-                    failure(error)
+                    var errorResponse: [String: AnyObject]? = [:]
+                    
+                    if let data = response.data {
+                        do {
+                            errorResponse = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String:AnyObject]
+                        } catch let error as NSError {
+                            failure(error: error, errorDictionary: nil)
+                        }
+                        catch let error {
+                            failure(error: error, errorDictionary: nil)
+                        }
+                        failure(error: error, errorDictionary: errorResponse)
+                    } else {
+                        failure(error: error, errorDictionary: nil)
+                    }
                 }
                 if let shoppingSession = response.result.value {
                     success(response: shoppingSession)
@@ -633,13 +853,28 @@ public class IShopAwayApiManager {
                 
         }
     }
-    public func createPurchaseRequest(createPurchaseRequest: CreatePurchaseRequest, success: (response: PurchaseRequest?) -> Void, failure: (ErrorType?) -> Void) {
+    public func createPurchaseRequest(createPurchaseRequest: CreatePurchaseRequest, success: (response: PurchaseRequest?) -> Void, failure: (error: ErrorType?, errorDictionary: [String: AnyObject]?) -> Void) {
         let params = createPurchaseRequest.parameterize()
         
         Alamofire.request(.POST, apiBaseUrl + "purchase_requests", parameters: params, encoding: .JSON, headers: headers)
+            .validate()
             .responseObject { (response: Response<PurchaseRequest, NSError>) in
                 if let error = response.result.error {
-                    failure(error)
+                    var errorResponse: [String: AnyObject]? = [:]
+                    
+                    if let data = response.data {
+                        do {
+                            errorResponse = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String:AnyObject]
+                        } catch let error as NSError {
+                            failure(error: error, errorDictionary: nil)
+                        }
+                        catch let error {
+                            failure(error: error, errorDictionary: nil)
+                        }
+                        failure(error: error, errorDictionary: errorResponse)
+                    } else {
+                        failure(error: error, errorDictionary: nil)
+                    }
                 }
                 if let purchaseRequest = response.result.value {
                     success(response: purchaseRequest)
@@ -647,38 +882,83 @@ public class IShopAwayApiManager {
                 
         }
     }
-    public func updatePurchaseRequest(updatePurchaseRequest: UpdatePurchaseRequest, success: (response: PurchaseRequest) -> Void, failure: (ErrorType?) -> Void) {
+    public func updatePurchaseRequest(updatePurchaseRequest: UpdatePurchaseRequest, success: (response: PurchaseRequest) -> Void, failure: (error: ErrorType?, errorDictionary: [String: AnyObject]?) -> Void) {
         let params = updatePurchaseRequest.parameterize()
         
         
         Alamofire.request(.PUT , apiBaseUrl + "purchase_requests/\(updatePurchaseRequest.purchaseRequest.id)", parameters: params, encoding: .JSON, headers: headers)
+            .validate()
             .responseObject { (response: Response<PurchaseRequest, NSError>) in
                 if let error = response.result.error {
-                    failure(error)
+                    var errorResponse: [String: AnyObject]? = [:]
+                    
+                    if let data = response.data {
+                        do {
+                            errorResponse = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String:AnyObject]
+                        } catch let error as NSError {
+                            failure(error: error, errorDictionary: nil)
+                        }
+                        catch let error {
+                            failure(error: error, errorDictionary: nil)
+                        }
+                        failure(error: error, errorDictionary: errorResponse)
+                    } else {
+                        failure(error: error, errorDictionary: nil)
+                    }
                 }
                 if let purchaseRequest = response.result.value {
                     success(response: purchaseRequest)
                 }
         }
     }
-    public func getPurchaseRequest(purchaseRequestId: String, success: (response: PurchaseRequest) -> Void, failure: (ErrorType?) -> Void) {
+    public func getPurchaseRequest(purchaseRequestId: String, success: (response: PurchaseRequest) -> Void, failure: (error: ErrorType?, errorDictionary: [String: AnyObject]?) -> Void) {
         Alamofire.request(.GET, apiBaseUrl + "purchase_requests/\(purchaseRequestId)", parameters: nil, encoding: .JSON, headers: headers)
+            .validate()
             .responseObject { (response: Response<PurchaseRequest, NSError>) in
                 if let error = response.result.error {
-                    failure(error)
+                    var errorResponse: [String: AnyObject]? = [:]
+                    
+                    if let data = response.data {
+                        do {
+                            errorResponse = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String:AnyObject]
+                        } catch let error as NSError {
+                            failure(error: error, errorDictionary: nil)
+                        }
+                        catch let error {
+                            failure(error: error, errorDictionary: nil)
+                        }
+                        failure(error: error, errorDictionary: errorResponse)
+                    } else {
+                        failure(error: error, errorDictionary: nil)
+                    }
                 }
                 if let purchaseRequest = response.result.value {
                     success(response: purchaseRequest)
                 }
         }
     }
-    public func createCheckoutRequest(createCheckoutRequest: CreateCheckoutRequest, success: (response: CheckoutRequest?) -> Void, failure: (error: ErrorType?) -> Void) {
+    public func createCheckoutRequest(createCheckoutRequest: CreateCheckoutRequest, success: (response: CheckoutRequest?) -> Void, failure: (error: ErrorType?, errorDictionary: [String: AnyObject]?) -> Void) {
         let params = createCheckoutRequest.parameterize()
         
         Alamofire.request(.POST, apiBaseUrl + "checkout_requests", parameters: params, encoding: .JSON, headers: headers)
+            .validate()
             .responseObject { (response: Response<CheckoutRequest, NSError>) in
                 if let error = response.result.error {
-                    failure(error: error)
+                    var errorResponse: [String: AnyObject]? = [:]
+                    
+                    if let data = response.data {
+                        do {
+                            errorResponse = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String:AnyObject]
+                        } catch let error as NSError {
+                            failure(error: error, errorDictionary: nil)
+                        }
+                        catch let error {
+                            failure(error: error, errorDictionary: nil)
+                        }
+                        failure(error: error, errorDictionary: errorResponse)
+                    } else {
+                        failure(error: error, errorDictionary: nil)
+                    }
                 }
                 if let checkoutRequest = response.result.value {
                     success(response: checkoutRequest)
@@ -686,25 +966,55 @@ public class IShopAwayApiManager {
                 
         }
     }
-    public func updateCheckoutRequest(updateCheckoutRequest: UpdateCheckoutRequest, success: (response: CheckoutRequest) -> Void, failure: (ErrorType?) -> Void) {
+    public func updateCheckoutRequest(updateCheckoutRequest: UpdateCheckoutRequest, success: (response: CheckoutRequest) -> Void, failure: (error: ErrorType?, errorDictionary: [String: AnyObject]?) -> Void) {
         let params = updateCheckoutRequest.parameterize()
         
         
         Alamofire.request(.PUT , apiBaseUrl + "checkout_requests/\(updateCheckoutRequest.checkoutRequest.id)", parameters: params, encoding: .JSON, headers: headers)
+            .validate()
             .responseObject { (response: Response<CheckoutRequest, NSError>) in
                 if let error = response.result.error {
-                    failure(error)
+                    var errorResponse: [String: AnyObject]? = [:]
+                    
+                    if let data = response.data {
+                        do {
+                            errorResponse = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String:AnyObject]
+                        } catch let error as NSError {
+                            failure(error: error, errorDictionary: nil)
+                        }
+                        catch let error {
+                            failure(error: error, errorDictionary: nil)
+                        }
+                        failure(error: error, errorDictionary: errorResponse)
+                    } else {
+                        failure(error: error, errorDictionary: nil)
+                    }
                 }
                 if let checkoutRequest = response.result.value {
                     success(response: checkoutRequest)
                 }
         }
     }
-    public func getCheckoutRequest(checkoutRequestId: String, success: (response: CheckoutRequest) -> Void, failure: (ErrorType?) -> Void) {
+    public func getCheckoutRequest(checkoutRequestId: String, success: (response: CheckoutRequest) -> Void, failure: (error: ErrorType?, errorDictionary: [String: AnyObject]?) -> Void) {
         Alamofire.request(.GET,  apiBaseUrl + "checkout_requests/\(checkoutRequestId)", parameters: nil, encoding: .JSON, headers: headers)
+            .validate()
             .responseObject { (response: Response<CheckoutRequest, NSError>) in
                 if let error = response.result.error {
-                    failure(error)
+                    var errorResponse: [String: AnyObject]? = [:]
+                    
+                    if let data = response.data {
+                        do {
+                            errorResponse = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String:AnyObject]
+                        } catch let error as NSError {
+                            failure(error: error, errorDictionary: nil)
+                        }
+                        catch let error {
+                            failure(error: error, errorDictionary: nil)
+                        }
+                        failure(error: error, errorDictionary: errorResponse)
+                    } else {
+                        failure(error: error, errorDictionary: nil)
+                    }
                 }
                 if let checkoutRequest = response.result.value {
                     success(response: checkoutRequest)
