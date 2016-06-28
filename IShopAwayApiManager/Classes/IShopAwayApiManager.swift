@@ -55,12 +55,14 @@ public struct CreateUser {
     let password: String
     let firstName: String
     let lastName: String
+    let role: String
     
-    public init(emailAddress: String, password: String, firstName: String, lastName: String) {
+    public init(emailAddress: String, password: String, firstName: String, lastName: String, role: String) {
         self.emailAddress = emailAddress
         self.password = password
         self.firstName = firstName
         self.lastName = lastName
+        self.role = role
     }
     func parameterize() -> [String : AnyObject] {
         let parameters = [
@@ -68,7 +70,8 @@ public struct CreateUser {
             "email_address": emailAddress,
             "password": password,
             "first_name": firstName,
-            "last_name": lastName
+            "last_name": lastName,
+            "role": role
         ]
         
         return parameters
