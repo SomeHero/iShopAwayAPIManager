@@ -32,10 +32,10 @@ public class PaymentMethod: Mappable {
     public func mapping(map: Map) {
         id <- map["_id"]
         type <- map["type"]
-        cardType <- map["card_type"]
-        cardLastFour <- map["card_last_four"]
-        expirationMonth <- map["expiration_month"]
-        expirationYear <- map["expiration_year"]
+        cardType <- map["card_info.card_type"]
+        cardLastFour <- map["card_info.card_last_four"]
+        expirationMonth <- map["card_info.expiration_month"]
+        expirationYear <- map["card_info.expiration_year"]
         isDefault <- map["is_default"]
     }
 }

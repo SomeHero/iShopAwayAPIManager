@@ -126,6 +126,22 @@ public struct ShoppingSessionCheckout {
         return parameters
     }
 }
+public struct ShoppingSessionAuthorization {
+    let shoppingSession: ShoppingSession
+    let stripeToken: String
+    
+    public init(shoppingSession: ShoppingSession, stripeToken: String) {
+        self.shoppingSession = shoppingSession
+        self.stripeToken = stripeToken
+    }
+    func parameterize() -> [String : AnyObject] {
+        let parameters = [
+            "stripe_token": stripeToken
+        ]
+
+        return parameters
+    }
+}
 public struct UpdateMarket {
     public let marketId: String
     public let name: String
@@ -682,6 +698,36 @@ public class IShopAwayApiManager {
                 if let shoppingSession = response.result.value {
                     success(response: shoppingSession)
                 }
+        }
+    }
+    public func authorize(shoppingSessionCheckout: ShoppingSessionAuthorization, success: (response: ShoppingSession) -> Void, failure: (error: ErrorType?, errorDictionary: [String: AnyObject]?) -> Void) {
+        let params = shoppingSessionCheckout.parameterize()
+        
+        if let shoppingSessionId = shoppingSessionCheckout.shoppingSession.id {
+            Alamofire.request(.POST, apiBaseUrl + "shopping_sessions/\(shoppingSessionId)/authorize", parameters: params, encoding: .JSON, headers: headers)
+                .validate()
+                .responseObject { (response: Response<ShoppingSession, NSError>) in
+                    if let error = response.result.error {
+                        var errorResponse: [String: AnyObject]? = [:]
+                        
+                        if let data = response.data {
+                            do {
+                                errorResponse = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String:AnyObject]
+                            } catch let error as NSError {
+                                failure(error: error, errorDictionary: nil)
+                            }
+                            catch let error {
+                                failure(error: error, errorDictionary: nil)
+                            }
+                            failure(error: error, errorDictionary: errorResponse)
+                        } else {
+                            failure(error: error, errorDictionary: nil)
+                        }
+                    }
+                    if let shoppingSession = response.result.value {
+                        success(response: shoppingSession)
+                    }
+            }
         }
     }
     public func checkout(shoppingSessionCheckout: ShoppingSessionCheckout, success: (response: ShoppingSession) -> Void, failure: (error: ErrorType?, errorDictionary: [String: AnyObject]?) -> Void) {

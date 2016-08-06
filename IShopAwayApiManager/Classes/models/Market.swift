@@ -15,14 +15,17 @@ public class Market: Mappable {
     public var mainImageUrl: String?
     public var about: String
     public var personalShopper: PersonalShopper?
+    public var products: [Product]
 
     public init(name: String, about: String) {
         self.name = name
         self.about = about
+        self.products = []
     }
     public required init?(_ map: Map){
         self.name = ""
         self.about = ""
+        self.products = []
     }
     
     public func mapping(map: Map) {
@@ -30,5 +33,23 @@ public class Market: Mappable {
         name <- map["name"]
         about <- map["description"]
         mainImageUrl <- map["main_image_url"]
+        products <- map["products"]
+    }
+}
+public class Product: Mappable {
+    public var name: String!
+    public var images: Dictionary<String, String>? = [:]
+    
+    public init(name: String, images: Dictionary<String, String>) {
+        self.name = name
+        self.images = images
+    }
+    public required init?(_ map: Map){
+        self.name = ""
+    }
+    
+    public func mapping(map: Map) {
+        name <- map["product_name"]
+        images <- map["images"]
     }
 }
