@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'IShopAwayApiManager'
-  s.version          = '0.1.19'
+  s.version          = '0.1.20'
   s.summary          = 'Shared API for iShopAway.'
   s.description      = 'Shared API for iShopAway'
   s.homepage         = 'https://github.com/iShopAway/ishopaway-apimanager-ios'

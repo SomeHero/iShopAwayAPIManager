@@ -793,7 +793,7 @@ public class IShopAwayApiManager {
     public func getMarkets(success: (response: [Market]?) -> Void, failure: (error: ErrorType?, errorDictionary: [String: AnyObject]?) -> Void) {
         Alamofire.request(.GET,  apiBaseUrl + "markets")
             .validate()
-            .responseArray { (response: Response<[Market], NSError>) in
+            .responseArray(keyPath: "results") { (response: Response<[Market], NSError>) in
                 if let error = response.result.error {
                     var errorResponse: [String: AnyObject]? = [:]
                     
